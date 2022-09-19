@@ -30,9 +30,9 @@ export const Transaction = () => {
               <td className={classes.name}>
                 <span>{currentUser.email}</span>
               </td>
-              <td style={{ color: "white" }}>{transaction.balance}</td>
-              <td style={{ color: "white" }}>{transaction.transaction}</td>
-              <td style={{ color: "white" }}>{transaction.refund}</td>
+              <td style={{ color: "white" }}>{transaction?.balance}</td>
+              <td style={{ color: "white" }}>{transaction?.transaction}</td>
+              <td style={{ color: "white" }}>{transaction?.refund}</td>
             </tr>
 
             {/* akhane map ses hbe */}

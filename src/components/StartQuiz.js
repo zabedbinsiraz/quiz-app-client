@@ -62,7 +62,7 @@ export const StartQuiz = ({
             <br />
             <br />
             <br />
-            <label>You need to pay $69 to participate this quiz</label>
+            <label>You need to pay ${quiz?.price} to participate this quiz</label>
             <TextInput
               className={classes.textInput}
               type="number"

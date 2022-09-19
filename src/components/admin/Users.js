@@ -1,21 +1,31 @@
 import React, { useState } from "react";
 import { deleteUser, updateTransaction } from "../../contexts/controllers";
 import useTransaction from "../../hooks/useTransaction";
-import useUsers from "../../hooks/useUsers";
 import classes from "../../styles/Users.module.css";
 import Button from "../Button";
 import Form from "../Form";
 import TextInput from "../TextInput";
 
 export const Users = () => {
-  const { users } = useUsers();
+  const [users, setUsers] = useState([]);
   const [userId, setUserId] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
-  const [refund, setRefund] = useState();
+  const [refund, setRefund] = useState(0);
   const { transaction } = useTransaction(userId);
+
+  function getUsers() {
+    fetch("http://localhost:4000/user")
+      .then((res) => res.json())
+      .then((data) => {
+        setUsers(data.result);
+      })
+      .catch((err) => console.log(err));
+  }
+  getUsers();
 
   function deleteSingleUser(id) {
     deleteUser(id);
+    getUsers();
   }
   function transactionHandler(id) {
     setUserId(id);
@@ -72,9 +82,9 @@ export const Users = () => {
           </tbody>
         </table>
         {isUpdate && (
-          <Form style={{ height: "500px" }} onSubmit={handleSubmit}>
+          <Form style={{ height: "100px" }} onSubmit={handleSubmit}>
             <TextInput
-              type="text"
+              type="number"
               required
               value={refund}
               onChange={(e) => setRefund(e.target.value)}

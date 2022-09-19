@@ -1,32 +1,52 @@
 import React, { useState } from "react";
 import { deleteQuiz, updateQuiz } from "../../contexts/controllers";
-import useQuizList from "../../hooks/useQuizList";
 import classes from "../../styles/Users.module.css";
 import Button from "../Button";
 import Form from "../Form";
 import TextInput from "../TextInput";
-import useQuiz from "./../../hooks/useQuiz";
 
 export const QuizList = () => {
-  const { quizes } = useQuizList();
+  const [quizes, setQuizes] = useState([]);
   const [id, setId] = useState();
-  const { quiz } = useQuiz(id);
   const [isUpdate, setIsUpdate] = useState(false);
 
-  const [quizName, setQuizName] = useState(quiz?.quizName);
-  const [type, setType] = useState(quiz?.type);
-  const [ansShow, setAnsShow] = useState(quiz?.ansShow);
-  const [retakeNo, setRetakeNo] = useState(quiz?.retake);
-  const [quesTime, setQuesTime] = useState(quiz?.questionTime);
-  const [quizTime, setQuizTime] = useState(quiz?.quizTime);
+  const [quizName, setQuizName] = useState();
+  const [type, setType] = useState();
+  const [ansShow, setAnsShow] = useState();
+  const [retakeNo, setRetakeNo] = useState();
+  const [quesTime, setQuesTime] = useState();
+  const [quizTime, setQuizTime] = useState();
+
+  function quizList() {
+    fetch("http://localhost:4000/quiz")
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result.data);
+        setQuizes(result.data);
+      })
+      .catch((err) => console.log(err));
+  }
+  quizList();
 
   function editQuiz(id) {
-    setId(id);
     setIsUpdate(true);
+    fetch(`http://localhost:4000/quiz/${id}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setQuizName(result.data.quizName);
+        setType(result.data.quizType);
+        setAnsShow(result.data.ansShow);
+        setRetakeNo(result.data.retake);
+        setQuesTime(result.data.questionTime);
+        setQuizTime(result.data.quizTime);
+        setId(result.data._id);
+      })
+      .catch((err) => console.log(err));
   }
 
   function deleteSingleQuiz(id) {
     deleteQuiz(id);
+    quizList();
   }
 
   function handleSubmit() {

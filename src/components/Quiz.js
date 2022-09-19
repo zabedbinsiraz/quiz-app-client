@@ -12,7 +12,7 @@ export default function Quiz({ quizType, price, title, image, noq }) {
         <p>Total points : {noq * 5}</p>
         <p>{quizType}</p>
       </div>
-      <Button>Enroll</Button>
+      <Button >Enroll</Button>                       
       
     </div>
   );

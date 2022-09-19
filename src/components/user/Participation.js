@@ -31,7 +31,7 @@ export const Participation = () => {
                 </td>
                 <td style={{ color: "white" }}>{participant.marks}</td>
                 <td style={{ color: "white" }}>
-                  {participant.createdAt.toLocalTimeString}
+                  {participant.createdAt}
                 </td>
                 <td style={{ color: "white" }}>{participant.payment}</td>
               </tr>

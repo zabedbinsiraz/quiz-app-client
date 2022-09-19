@@ -49,6 +49,7 @@ export default function QuizPage() {
       value: questions,
     });
   }, [questions]);
+  console.log(questions);
 
   function handleAnswerChange(e, index) {
     dispatch({
@@ -99,6 +100,8 @@ export default function QuizPage() {
   // calculate percentage of progress
   const percentage =
     questions.length > 0 ? ((currentQuestion + 1) / questions.length) * 100 : 0;
+
+    console.log(error);
 
   return (
     <>
