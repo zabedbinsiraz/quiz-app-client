@@ -1,0 +1,39 @@
+/* menu related styles */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  justify-content: end;
+  align-content: center;
+  height: 40px;
+  min-width: 800px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.menuItem {
+  font-size: 14px;
+  justify-self: center;
+  padding: 0 10px;
+  color: #171c2a;
+}
+
+.menuItem:not(:last-child) {
+  border-right: 1px solid #1f222e;
+}
+
+.menu a {
+  color: #171c2a;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 800px) {
+  .menu {
+    min-width: 90%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .menu {
+    width: 80%;
+  }
+}

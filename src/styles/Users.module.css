@@ -1,0 +1,87 @@
+:root {
+  --primary: #171c2a;
+  --secondary: #11141f;
+  --tertiary: #1f222e;
+  --dark: #0e0e12;
+  --green: #52d794;
+  --blue: #00b3bd;
+  --light: #fff;
+  --red: indianred;
+}
+
+/* user list related styles */
+.manageUserContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* min-width: 800px;
+  max-width: 1000px; */
+  width: 100%;
+  height: 100%;
+  /* height: calc(100vh - 70px); */
+  background: var(--primary);
+  border-radius: 10px;
+  padding: 4rem 3rem;
+}
+
+.title h2 {
+  color: var(--light);
+  font-size: 2.4rem;
+  margin-top: 2rem;
+}
+
+.usersTable {
+  width: 100%;
+  color: var(--light);
+  border-radius: 5px;
+  margin-top: 1rem;
+  height: 100vh;
+}
+
+.usersTable table {
+  width: 90%;
+  margin: 2rem auto;
+  font-size: 1.2em;
+  border-collapse: collapse;
+  min-width: 400px;
+}
+
+.usersTable thead tr {
+  background-color: var(--green);
+  color: var(--primary);
+  text-align: left;
+}
+
+.usersTable tbody tr button:hover {
+  /* transform: scale(1.01); */
+  cursor: pointer;
+}
+
+.usersTable thead th:last-of-type,
+.usersTable tbody td:last-of-type {
+  text-align: center;
+}
+
+.usersTable th,
+.usersTable td {
+  padding: 12px 15px;
+}
+
+.name span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--light);
+}
+
+.name span {
+  font-weight: 600;
+}
+
+.usersTable tbody tr:nth-of-type(even) {
+  background-color: var(--tertiary);
+}
+
+.usersTable tbody tr:last-of-type {
+  border-bottom: 2px solid var(--green);
+}
