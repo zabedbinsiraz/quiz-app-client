@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import useTransaction from "../../hooks/useTransaction";
+
 import classes from "../../styles/Users.module.css";
 
 export const Transaction = () => {
   const { currentUser } = useAuth();
+  const userId = currentUser.userId;
+  const [transaction,setTransaction] = useState({})
 
-  const { transaction } = useTransaction(currentUser.userId);
-  console.log(transaction);
+  
+
+  useEffect(() => {
+    
+    fetch(`http://localhost:4000/user/transaction/${userId}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setTransaction(result.data);
+        
+      })
+      .catch((err) => console.log(err));
+  }, [userId]);
 
   return (
     <div className={classes.manageUserContainer}>
@@ -30,9 +42,9 @@ export const Transaction = () => {
               <td className={classes.name}>
                 <span>{currentUser.email}</span>
               </td>
-              <td style={{ color: "white" }}>{transaction?.balance}</td>
-              <td style={{ color: "white" }}>{transaction?.transaction}</td>
-              <td style={{ color: "white" }}>{transaction?.refund}</td>
+              <td style={{ color: "white" }}>{transaction?.balance || 0}</td>
+              <td style={{ color: "white" }}>{transaction?.transaction + transaction?.refund || 0}</td>
+              <td style={{ color: "white" }}>{transaction?.refund || 0}</td>
             </tr>
 
             {/* akhane map ses hbe */}

@@ -8,7 +8,8 @@ export async function deleteQuiz(id) {
     const res = await fetch(url, {
       method: "DELETE",
     });
-    const result = res.json();
+    console.log(res);
+    const result =await res.json();
     return result;
   } catch (err) {
     console.error(err);
@@ -20,13 +21,15 @@ export async function updateQuiz(id, updateData) {
 
   try {
     let response = await fetch(url, {
-      method: "PATCH",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updateData),
     });
-    return await response.json();
+    console.log(response);
+    const result = await response.json();
+    return result;
   } catch (err) {
     console.error(err);
     // Handle errors here
@@ -132,7 +135,7 @@ export async function updateTransaction(id, updateData) {
       },
       body: JSON.stringify(updateData),
     });
-    console.log(response);
+    return await response.json();
   } catch (err) {
     console.error(err);
     // Handle errors here

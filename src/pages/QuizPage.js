@@ -39,7 +39,7 @@ export default function QuizPage() {
   const navigate = useNavigate();
 
   const [retake, setRetake] = useState(0);
-  const [ansShow, setAnsShow] = useState("");
+  const [ansShow, setAnsShow] = useState('');
   const [isEnroll, setIsEnroll] = useState(false);
   const [payment, setPayment] = useState(0);
 
@@ -66,6 +66,7 @@ export default function QuizPage() {
     quiz: id,
     payment: payment,
     quizName: quiz?.quizName,
+    quizType:quiz.quizType,
   };
 
   function nextQuestion() {
@@ -80,6 +81,7 @@ export default function QuizPage() {
 
   // submit quiz
   async function submit() {
+    
     if (ansShow === "retake complete") {
       if (retake > 0) {
         setRetake((r) => r - 1);
@@ -102,6 +104,7 @@ export default function QuizPage() {
     questions.length > 0 ? ((currentQuestion + 1) / questions.length) * 100 : 0;
 
     console.log(error);
+
 
   return (
     <>
@@ -137,6 +140,7 @@ export default function QuizPage() {
           retake={retake}
           ansShow={ansShow}
           quiz={quiz}
+          payment={payment}
         />
       )}
     </>

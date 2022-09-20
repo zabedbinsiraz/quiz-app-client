@@ -5,8 +5,8 @@ export default function Quiz({ quizType, price, title, image, noq }) {
   return (
     <div className={classes.quiz}>
       <h4>{title}</h4>
-      <img src={image} alt={title} />
-      <p>{price}</p>
+      <img style={{width:'300px',height:'200px'}} src={image} alt={title} />
+      <p>${price}</p>
       <div className={classes.qmeta}>
         <p>{noq} Questions</p>
         <p>Total points : {noq * 5}</p>

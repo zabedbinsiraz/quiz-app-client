@@ -1,10 +1,24 @@
-import React from "react";
-import useParticipants from "../../hooks/useParticipants";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import classes from "../../styles/Users.module.css";
 
 export const Participation = () => {
-  const { participants } = useParticipants();
+  const {currentUser} = useAuth()
+  const [participants,setParticipants ]   = useState([]);
+  const id = currentUser.userId;
   console.log(participants);
+
+  useEffect(() => {
+   
+    fetch(`http://localhost:4000/quiz/user/participation/${id}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setParticipants(result.data);
+        
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+  console.log(currentUser);
 
   return (
     <div className={classes.manageUserContainer}>

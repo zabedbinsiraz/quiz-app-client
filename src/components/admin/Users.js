@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { deleteUser, updateTransaction } from "../../contexts/controllers";
-import useTransaction from "../../hooks/useTransaction";
 import classes from "../../styles/Users.module.css";
 import Button from "../Button";
 import Form from "../Form";
@@ -11,7 +10,7 @@ export const Users = () => {
   const [userId, setUserId] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
   const [refund, setRefund] = useState(0);
-  const { transaction } = useTransaction(userId);
+  const [transaction,setTransaction]=useState();
 
   function getUsers() {
     fetch("http://localhost:4000/user")
@@ -27,15 +26,34 @@ export const Users = () => {
     deleteUser(id);
     getUsers();
   }
-  function transactionHandler(id) {
-    setUserId(id);
+  function transactionHandler(userId) {
+    fetch(`http://localhost:4000/user/transaction/${userId}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setTransaction(result.data);
+      })
+      .catch((err) => console.log(err));
     setIsUpdate(true);
   }
-  function handleSubmit() {
-    const updateObj = {
-      refund: transaction?.refund + Number(refund),
-    };
-    updateTransaction(transaction?._id, updateObj);
+ async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      const updateObj = {
+        refund: transaction?.refund + Number(refund),
+      };
+     if(transaction){
+      const res = await updateTransaction(transaction?._id, updateObj);
+      console.log(res);
+      setIsUpdate(false);
+     }else{
+      alert("This user has no transaction yet!!")
+      setIsUpdate(false);
+
+     }
+    } catch (error) {
+      
+    }
   }
   return (
     <div className={classes.manageUserContainer}>
@@ -82,7 +100,7 @@ export const Users = () => {
           </tbody>
         </table>
         {isUpdate && (
-          <Form style={{ height: "100px" }} onSubmit={handleSubmit}>
+          <Form style={{ height: "100px",width:'300px' }} onSubmit={handleSubmit}>
             <TextInput
               type="number"
               required

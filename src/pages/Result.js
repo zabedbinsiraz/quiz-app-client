@@ -6,20 +6,21 @@ import {
   updateTransaction
 } from "../contexts/controllers";
 
+import { useEffect, useState } from 'react';
 import Analysis from "../components/Analysis";
 import Button from "../components/Button";
 import Summary from "../components/Summary";
 import useQuestions from "../hooks/useQuestions";
 import { useAuth } from "./../contexts/AuthContext";
-import useTransaction from "./../hooks/useTransaction";
 
 export default function Result() {
   const { id } = useParams();
   const { qna, participantData, setParticipantData, currentUser } = useAuth();
   const navigate = useNavigate();
-  const { transaction } = useTransaction(currentUser.userId);
 
   const { loading, error, questions, quiz } = useQuestions(id);
+  const [transaction,setTransaction] = useState();
+  const userId = currentUser.userId;
 
   function calculate() {
     let score = 0;
@@ -44,19 +45,31 @@ export default function Result() {
     return score;
   }
 
+  useEffect(() => {
+    
+    fetch(`http://localhost:4000/user/transaction/${userId}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setTransaction(result.data);
+        
+      })
+      .catch((err) => console.log(err));
+  }, [userId]);
+
   const userScore = calculate();
 
   const participantObj = { ...participantData, marks: userScore };
-  function handleFinish() {
-    if (transaction?._id) {
+
+ async function handleFinish() {
+    if (transaction) {
       console.log("inside if");
-      updateTransaction(transaction?._id, {
-        transaction: transaction?.transaction + 100,
+     await updateTransaction(transaction._id, {
+        transaction: transaction.transaction + participantData.payment,
       });
     } else {
-      submitTransaction(quiz?.price, currentUser?.userId);
+    await  submitTransaction(quiz.price, currentUser.userId);
     }
-    submitParticipant(participantObj);
+   await submitParticipant(participantObj);
     navigate("/home", { replace: true });
     setParticipantData({});
   }

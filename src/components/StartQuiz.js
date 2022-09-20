@@ -14,6 +14,7 @@ export const StartQuiz = ({
   setAnsShow,
   setPayment,
   quiz,
+  payment,
 }) => {
   const { participantData } = useAuth();
   const [isStart, setIsStart] = useState(false);
@@ -32,10 +33,10 @@ export const StartQuiz = ({
   }
 
   return (
-    <div>
+    <div style={{display:'flex',alignItems:'center',justifyContent:'center'}}>
       {!isStart ? (
         participantData?.quiz !== quiz?._id ? (
-          <Form className={style.form} onSubmit={handleSubmit}>
+          <Form style={{width:'400px'}} className={style.form} onSubmit={handleSubmit}>
             <label>When show the quiz answers</label>
             <select
               className={classes.textInput}
@@ -67,7 +68,7 @@ export const StartQuiz = ({
               className={classes.textInput}
               type="number"
               required
-              value={0}
+              value={payment}
               onChange={(e) => setPayment(e.target.value)}
             />
             <Button className={style.button} type="submit">
@@ -77,7 +78,7 @@ export const StartQuiz = ({
             </Button>
           </Form>
         ) : (
-          <Button className={style.button} onClick={handleRetake}>
+          <Button disabled={retake} className={style.button} onClick={handleRetake}>
             Take Retake
           </Button>
         )

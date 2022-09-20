@@ -35,7 +35,7 @@
   color: var(--light);
   border-radius: 5px;
   margin-top: 1rem;
-  height: 100vh;
+  height: 100%;
 }
 
 .usersTable table {

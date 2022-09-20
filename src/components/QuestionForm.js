@@ -26,8 +26,14 @@ export const QuestionForm = ({
   const [answer2, setAnswer2] = useState();
   const [answer3, setAnswer3] = useState();
 
+  function outAll(){
+    setQuestions((q) => q + 1);
+      setIsOpenQuestion(false);
+      setOpenQuestionBtn(true);
+  }
   async function handleQuestion(e) {
     e.preventDefault();
+   
 
     const arr1 = [
       { title: option1 },
@@ -76,9 +82,8 @@ export const QuestionForm = ({
     try {
       const res = await createQuestion(questionObj);
       console.log(res.message);
-      setQuestions((q) => q + 1);
-      setIsOpenQuestion(false);
-      setOpenQuestionBtn(true);
+      outAll();
+      
     } catch (error) {
       console.log(error);
     }
@@ -190,7 +195,7 @@ export const QuestionForm = ({
       />
 
       <Button type="submit">
-        <span>Create Quiz</span>
+        <span>Add Quiz</span>
       </Button>
     </Form>
   );

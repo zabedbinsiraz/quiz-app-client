@@ -14,15 +14,17 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
   const [token, setToken] = useState();
 
+  const [createdQuizId,setCreatedQuizId]=useState();
+
   const [qna, setQna] = useState([]);
-  const [participantData, setParticipantData] = useState({});
+  const [participantData, setParticipantData] = useState();
 
   // create question
   async function createQuestion(questionObj) {
     const url = `http://localhost:4000/quiz/question`;
 
     try {
-      setLoading(true);
+     
       let response = await fetch(url, {
         method: "POST",
         headers: {
@@ -30,11 +32,11 @@ export function AuthProvider({ children }) {
         },
         body: JSON.stringify(questionObj),
       });
-      setLoading(false);
+     
       return await response.json();
     } catch (err) {
       console.error(err);
-      setError(err);
+     
       // Handle errors here
     }
   }
@@ -44,19 +46,30 @@ export function AuthProvider({ children }) {
     const url = `http://localhost:4000/quiz`;
 
     try {
-      let response = await fetch(url, {
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
         body: quizData,
-      });
-      console.log(response);
-      return await response.json();
-    } catch (err) {
-      console.error(err);
-      // Handle errors here
+      })
+      return await res.json();
+      
+    } catch (error) {
+      console.log(error)
     }
+
+    //  await fetch(url, {
+    //     method: "POST",
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //     body: quizData,
+    //   }).then(res=>res.json())
+    //      .then(result=>setCreatedQuizId(result.id))
+    //      .catch(err=>console.log(err))
+      
+   
   }
 
   // signup function
@@ -142,6 +155,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     createQuiz,
+    createdQuizId,
     createQuestion,
     qna,
     setQna,

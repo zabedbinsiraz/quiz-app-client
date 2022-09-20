@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteQuiz, updateQuiz } from "../../contexts/controllers";
 import classes from "../../styles/Users.module.css";
 import Button from "../Button";
@@ -16,40 +16,48 @@ export const QuizList = () => {
   const [retakeNo, setRetakeNo] = useState();
   const [quesTime, setQuesTime] = useState();
   const [quizTime, setQuizTime] = useState();
+  const [allQuiz,setAllQuiz] = useState(0);
+  const [allUpdate,setAllUpdate] = useState(0);
 
-  function quizList() {
-    fetch("http://localhost:4000/quiz")
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result.data);
-        setQuizes(result.data);
-      })
-      .catch((err) => console.log(err));
-  }
-  quizList();
+  useEffect(()=>{
+    console.log(allQuiz);
+    console.log(allUpdate);
+    fetch(`http://localhost:4000/quiz`)
+    .then((res) => res.json())
+    .then((result) => {
+      console.log(result.data);
+      setQuizes(result.data);
+    })
+    .catch((err) => console.log(err));
+  },[allQuiz,allUpdate])
 
   function editQuiz(id) {
+    setId(id);
     setIsUpdate(true);
     fetch(`http://localhost:4000/quiz/${id}`)
       .then((res) => res.json())
       .then((result) => {
+        console.log(result);
         setQuizName(result.data.quizName);
         setType(result.data.quizType);
         setAnsShow(result.data.ansShow);
         setRetakeNo(result.data.retake);
         setQuesTime(result.data.questionTime);
         setQuizTime(result.data.quizTime);
-        setId(result.data._id);
+        
       })
       .catch((err) => console.log(err));
   }
 
-  function deleteSingleQuiz(id) {
-    deleteQuiz(id);
-    quizList();
+  async function deleteSingleQuiz(id) {
+    const res = await deleteQuiz(id);
+    console.log(res)
+    setAllQuiz((q)=>q+1);
   }
 
-  function handleSubmit() {
+ async function handleSubmit(e) {
+  e.preventDefault();
+
     const dataObject = {
       quizName: quizName,
       quizType: type,
@@ -58,9 +66,17 @@ export const QuizList = () => {
       questionTime: Number(quesTime),
       quizTime: Number(quizTime),
     };
-    updateQuiz(id, dataObject);
-
+    console.log(dataObject)
+   try {
+    const res = await updateQuiz(id, dataObject);
+  //  console.log(res);
+    console.log(res);
     setIsUpdate(false);
+    setAllUpdate((u)=>u+1);
+   } catch (error) {
+    console.log(error);
+   }
+
   }
   return (
     <>
@@ -114,9 +130,10 @@ export const QuizList = () => {
                 background: "white",
                 padding: "10px",
                 borderRadius: "5px",
+                width:'600px'
               }}
             >
-              <Form onSubmit={handleSubmit}>
+              <Form  onSubmit={handleSubmit}>
                 <label>Quiz Title</label>
                 <TextInput
                   type="text"
@@ -176,7 +193,7 @@ export const QuizList = () => {
                 />
 
                 <Button type="submit">
-                  <span>Update Settings</span>
+                  <span>Update Quiz</span>
                 </Button>
               </Form>
             </div>
