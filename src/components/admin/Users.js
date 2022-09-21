@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { deleteUser, updateTransaction } from "../../contexts/controllers";
 import classes from "../../styles/Users.module.css";
 import Button from "../Button";
@@ -7,25 +7,29 @@ import TextInput from "../TextInput";
 
 export const Users = () => {
   const [users, setUsers] = useState([]);
-  const [userId, setUserId] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
   const [refund, setRefund] = useState(0);
   const [transaction,setTransaction]=useState();
+  const [deleteTotal,setDeleteTotal]= useState()
 
-  function getUsers() {
+  useEffect(()=>{
+    console.log(deleteTotal);
     fetch("http://localhost:4000/user")
       .then((res) => res.json())
       .then((data) => {
         setUsers(data.result);
       })
       .catch((err) => console.log(err));
-  }
-  getUsers();
+
+  },[deleteTotal])
+
+
 
   function deleteSingleUser(id) {
     deleteUser(id);
-    getUsers();
+    setDeleteTotal((d)=>d+1);
   }
+
   function transactionHandler(userId) {
     fetch(`http://localhost:4000/user/transaction/${userId}`)
       .then((res) => res.json())
@@ -35,6 +39,7 @@ export const Users = () => {
       .catch((err) => console.log(err));
     setIsUpdate(true);
   }
+
  async function handleSubmit(e) {
     e.preventDefault();
 

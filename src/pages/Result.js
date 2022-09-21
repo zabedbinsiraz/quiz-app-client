@@ -51,6 +51,7 @@ export default function Result() {
       .then((res) => res.json())
       .then((result) => {
         setTransaction(result.data);
+        console.log(result.data);
         
       })
       .catch((err) => console.log(err));
@@ -62,7 +63,6 @@ export default function Result() {
 
  async function handleFinish() {
     if (transaction) {
-      console.log("inside if");
      await updateTransaction(transaction._id, {
         transaction: transaction.transaction + participantData.payment,
       });

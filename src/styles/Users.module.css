@@ -1,14 +1,3 @@
-:root {
-  --primary: #171c2a;
-  --secondary: #11141f;
-  --tertiary: #1f222e;
-  --dark: #0e0e12;
-  --green: #52d794;
-  --blue: #00b3bd;
-  --light: #fff;
-  --red: indianred;
-}
-
 /* user list related styles */
 .manageUserContainer {
   display: flex;
@@ -19,20 +8,20 @@
   width: 100%;
   height: 100%;
   /* height: calc(100vh - 70px); */
-  background: var(--primary);
+  background: #171c2a;
   border-radius: 10px;
   padding: 4rem 3rem;
 }
 
 .title h2 {
-  color: var(--light);
+  color: #fff;
   font-size: 2.4rem;
   margin-top: 2rem;
 }
 
 .usersTable {
   width: 100%;
-  color: var(--light);
+  color: #fff;
   border-radius: 5px;
   margin-top: 1rem;
   height: 100%;
@@ -47,8 +36,8 @@
 }
 
 .usersTable thead tr {
-  background-color: var(--green);
-  color: var(--primary);
+  background-color: #52d794;
+  color: #171c2a;
   text-align: left;
 }
 
@@ -71,7 +60,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--light);
+  color: #fff;
 }
 
 .name span {
@@ -79,9 +68,9 @@
 }
 
 .usersTable tbody tr:nth-of-type(even) {
-  background-color: var(--tertiary);
+  background-color: #1f222e;
 }
 
 .usersTable tbody tr:last-of-type {
-  border-bottom: 2px solid var(--green);
+  border-bottom: 2px solid #52d794;
 }

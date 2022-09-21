@@ -16,31 +16,10 @@
   gap: 20px;
 }
 
-.progressBar .backButton {
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-  margin-left: 10px;
-  background: #47f5901c;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.progressBar .backButton:hover {
-  background: #47f5953a;
-}
-
 @media only screen and (max-width: 1024px) {
   .progressBar {
     width: calc(100vw - 60px);
     bottom: 10px;
-  }
-
-  .progressBar .backButton {
-    width: 40px;
-    height: 40px;
   }
 
   .next span:first-child {
