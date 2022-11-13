@@ -24,15 +24,7 @@ function App() {
     <AuthProvider>
       <Layout>
         <Routes>
-          <Route
-            path="/home"
-            element={
-              <PrivateRoute>
-                {" "}
-                <Home />{" "}
-              </PrivateRoute>
-            }
-          />
+          <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
